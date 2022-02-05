@@ -21,7 +21,51 @@
 </head>
 
 <body>
-    Welcome to Employee Payroll Website
+    
 </body>
+<script>
+    const getData = document.querySelector("#get_service");
+    const getURL = "http://localhost:3000/employees/1";
+    makeServiceCall("GET", getURL, true)
+        .then(responseText => {
+            getData.textContent = "Get Employees Data: " + responseText;
+        })
+        .catch(error => {
+            getData.textContent = "GET Error Status: " + JSON.stringify(error);
+        });
+
+    const deleteData = document.querySelector("#delete_service");
+    const deleteURL = "http://localhost:3000/employees/3";
+    makeServiceCall("DELETE", deleteURL, true)
+        .then(responseText => {
+            deleteData.textContent = "Remove Employee Data: " + responseText;
+        })
+        .catch(error => {
+            deleteData.textContent = "Remove Error Status: " + JSON.stringify(error);
+        });
+
+    const employeeData =
+    {
+        name: 'Ashok',
+        gender: 'Male',
+        departMent: [
+            'HR'
+        ],
+        salary: '30000',
+        startDate: '1 Jan 2020',
+        notes: '',
+        profileUrl: '../assets/profile-images/Ellipse 1.png'
+    };
+
+    const postData = document.querySelector("#post_service");
+    const postURL = "http://localhost:3000/employees/";
+    makeServiceCall("POST", postURL, true, employeeData)
+        .then(responseText => {
+            postData.textContent = "New Employee Data: " + responseText;
+        })
+        .catch(error => {
+            postData.textContent = "Post Error Status: " + JSON.stringify(error);
+        });
+</script>
 
 </html>
