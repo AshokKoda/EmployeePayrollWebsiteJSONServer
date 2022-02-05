@@ -1,0 +1,40 @@
+{
+  "employees": [
+    {
+      "name": "mohit kumar new",
+      "gender": "male",
+      "departMent": [
+        "HR"
+      ],
+      "salary": "30000",
+      "startDate": "1 Jan 2020",
+      "notes": "",
+      "id": 1,
+      "profileUrl": "../assets/profile-images/Ellipse 1.png"
+    },
+    {
+      "name": "mohit kumar test",
+      "gender": "male",
+      "departMent": [
+        "HR"
+      ],
+      "salary": "30000",
+      "startDate": "1 Jan 2020",
+      "notes": "",
+      "id": 2,
+      "profileUrl": "../assets/profile-images/Ellipse 1.png"
+    },
+    {
+      "name": "test",
+      "gender": "male",
+      "departMent": [
+        "HR"
+      ],
+      "salary": "30000",
+      "startDate": "1 Jan 2020",
+      "notes": "",
+      "id": 4,
+      "profileUrl": "../assets/profile-images/Ellipse -3.png"
+    }
+  ]
+}
