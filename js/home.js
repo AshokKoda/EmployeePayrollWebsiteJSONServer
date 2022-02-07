@@ -10,7 +10,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 function processEmployeePayrollDataResponse() {
     document.querySelector('.emp-count').textContent = employeePayrollList.length;
     createInnerHtml();
-    //localStorage.removeItem("edit-emp");
+    localStorage.removeItem("edit-emp");
 }
 
 const getDataFromLocalStorage = () => {
@@ -62,4 +62,14 @@ const getDepartmentHtml = (data) => {
         deptHtml = `${deptHtml} <div class='dept-label'>${dept}</div>`;
     }
     return deptHtml;
+}
+
+const update = (data) => {
+
+    let employeeData = employeePayrollList.find(empData => empData.id == data.id);
+    if (!employeeData) {
+        return;
+    }
+    localStorage.setItem('edit-emp', JSON.stringify(employeeData));
+    window.location.replace(site_properties.add_employee_page);
 }

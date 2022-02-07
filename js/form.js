@@ -1,8 +1,10 @@
+let isUpdate = false;
 let employPayrollObject = {};
 
 window.addEventListener('DOMContentLoaded', (event) => {
     validateInputs();
     validateDate();
+    checkForUpdate();
 });
 
 function validateInputs() {
@@ -44,7 +46,7 @@ function checkDate() {
     const dateError = document.querySelector('.date-error');
     try {
         let date = day.value + " " + month.value + " " + year.value;
-       checkStartDate(new Date(Date.parse(date)));
+        checkStartDate(new Date(Date.parse(date)));
         dateError.textContent = "";
     } catch (e) {
         dateError.textContent = e;
@@ -53,7 +55,7 @@ function checkDate() {
 
 function redirect() {
     console.log("redirect")
-    //resetForm();
+    resetForm();
     window.location.replace(site_properties.home_page)
 }
 
@@ -62,12 +64,12 @@ const save = (event) => {
     event.stopPropagation();
     try {
         setEmployeePayrollObject();
-        if(site_properties.use_local_storage.match("true")){
+        if (site_properties.use_local_storage.match("true")) {
             createAndUpdateStorage();
-            alert("Data Stored With Name "+employPayrollObject._name);
+            alert("Data Stored With Name " + employPayrollObject._name);
             redirect();
         } else {
-            alert("Data Stored With Name "+employPayrollObject._name);
+            alert("Data Stored With Name " + employPayrollObject._name);
             redirect();
             createOrUpdateEmployeeInJsonServer();
         }
@@ -78,6 +80,11 @@ const save = (event) => {
 }
 
 const setEmployeePayrollObject = () => {
+
+    if (!isUpdate && site_properties.use_local_storage.match("true")) {
+        employPayrollObject.id = createNewEmpId();
+    }
+
     employPayrollObject._name = getInputValueId('#name');
     employPayrollObject._profilePic = getSelectedValue('[name=profile]').pop();
     employPayrollObject._gender = getSelectedValue('[name=gender]').pop();
@@ -105,17 +112,114 @@ const getSelectedValue = (propertyValue) => {
 }
 
 function createOrUpdateEmployeeInJsonServer() {
-    let url=site_properties.server_url;
-    let methodCall="POST";
-    let message="Data Store with name ";
-    
-    makeServiceCall(methodCall,url,true,employPayrollObject)
-        .then(response=>{
-             alert(message +employPayrollObject._name)
-             redirect();
+    let url = site_properties.server_url;
+    let methodCall = "POST";
+    let message = "Data Store with name ";
+
+    if (isUpdate) {
+        methodCall = "PUT";
+        url = url + employPayrollObject.id.toString();
+        message = "Data Updated with name ";
+    }
+
+    makeServiceCall(methodCall, url, true, employPayrollObject)
+        .then(response => {
+            alert(message + employPayrollObject._name)
+            redirect();
         })
-        .catch(error=>{
+        .catch(error => {
             console.log("inside error")
             throw error
         });
+}
+
+const setTextValue = (id, value) => {
+    let textError = document.querySelector(id);
+    textError.textContent = value;
+}
+
+const createNewEmpId = () => {
+    let empId = localStorage.getItem('EmpId');
+    empId = !empId ? 1 : (parseInt(empId) + 1).toString();
+    localStorage.setItem('EmpId', empId);
+    return empId;
+}
+
+const createAndUpdateStorage = () => {
+    let dataList = JSON.parse(localStorage.getItem("EmployeePayrollList"));
+
+    if (dataList) {
+        let existingEmpData = dataList.find(empData => empData.id == employPayrollObject.id);
+        if (!existingEmpData) {
+            //No Need of id it will added in json server bydefault
+            // employPayrollObject.id = createNewEmpId();
+            dataList.push(employPayrollObject);
+        } else {
+            const index = dataList.map(empData => empData.id).indexOf(employPayrollObject.id);
+            dataList.splice(index, 1, employPayrollObject);
+        }
+    } else {
+        dataList = [employPayrollObject];
+    }
+    localStorage.setItem("EmployeePayrollList", JSON.stringify(dataList));
+}
+
+const resetForm = () => {
+    console.log("resetForm")
+    setValue('#name', '');
+    unsetSelectedValues('[name=profile]');
+    unsetSelectedValues('[name=gender]');
+    unsetSelectedValues('[name=department]');
+    setValue('#salary', '');
+    setTextValue('.salary-output', 400000);
+    setValue('#notes', '');
+    setValue('#day', '1');
+    setValue('#month', 'Jan');
+    setValue('#year', '2020');
+}
+const unsetSelectedValues = (propertyValue) => {
+    let allItems = document.querySelectorAll(propertyValue);
+    allItems.forEach(item => {
+        item.checked = false;
+    });
+}
+
+const setValue = (id, value) => {
+    const element = document.querySelector(id);
+    element.value = value;
+}
+
+const checkForUpdate = () => {
+    const jsonData = localStorage.getItem('edit-emp');
+    isUpdate = jsonData ? true : false;
+    if (!isUpdate) return;
+    employPayrollObject = JSON.parse(jsonData);
+    setForm();
+}
+
+const setForm = () => {
+    setValue('#name', employPayrollObject._name);
+    setSelectedValue('[name = profile]', employPayrollObject._profilePic);
+    setSelectedValue('[name = gender]', employPayrollObject._gender);
+    setSelectedValue('[name = department]', employPayrollObject._department);
+    setValue('#salary', employPayrollObject._salary);
+    setTextValue('.salary-output', employPayrollObject._salary);
+    let date = strigifyDate(employPayrollObject._startDate).split(" ");
+    setValue('#day', date[0]);
+    setValue('#month', date[1]);
+    setValue('#year', date[2]);
+    setValue('#notes', employPayrollObject._note);
+}
+
+const setSelectedValue = (propertyValue, value) => {
+    let allItem = document.querySelectorAll(propertyValue);
+    allItem.forEach(item => {
+        if (Array.isArray(value)) {
+            if (value.includes(item.value)) {
+                item.checked = true;
+            }
+        } else if (item.value === value) {
+            item.checked = true;
+        }
+    });
 }
