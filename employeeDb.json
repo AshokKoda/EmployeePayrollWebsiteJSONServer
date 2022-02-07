@@ -15,16 +15,17 @@
       "id": 1
     },
     {
-      "_name": "Demo",
-      "_profilePic": "../assets/profile-images/Ellipse -2.png",
+      "_name": "Ashok",
+      "_profilePic": "../assets/profile-images/Ellipse -3.png",
       "_gender": "male",
       "_department": [
-        "Engineer"
+        "Engineer",
+        "Others"
       ],
-      "_salary": "400000",
-      "_note": "Added                ",
-      "_startDate": 1643308200000,
-      "id": 2
+      "_salary": "415300",
+      "_note": "Data added                ",
+      "_startDate": 1643394600000,
+      "id": 3
     }
   ]
 }

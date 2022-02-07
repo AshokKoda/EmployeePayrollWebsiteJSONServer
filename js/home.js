@@ -64,6 +64,33 @@ const getDepartmentHtml = (data) => {
     return deptHtml;
 }
 
+const remove = (data) => {
+
+    let employeeData = employeePayrollList.find(empData => empData.id == data.id);
+    if (!employeeData) {
+        return;
+    }
+    const index = employeePayrollList.map(empData => empData.id).indexOf(employeeData.id);
+    if (site_properties.use_local_storage.match("true")) {
+        employeePayrollList.splice(index, 1);
+        localStorage.setItem('EmployeePayrollList', JSON.stringify(employeePayrollList));
+        document.querySelector('.emp-count').textContent = employeePayrollList.length;
+        createInnerHtml();
+    } else {
+        const deleteUrl = site_properties.server_url + employeeData.id.toString();
+        makeServiceCall("DELETE", deleteUrl, true)
+            .then(response => {
+                console.log(response)
+                document.querySelector(".emp-count").textContent = employeePayrollList.length;
+                createInnerHtml();
+            })
+            .catch(error => {
+                alert("Error while deleting " + error)
+            })
+    }
+
+}
+
 const update = (data) => {
 
     let employeeData = employeePayrollList.find(empData => empData.id == data.id);
