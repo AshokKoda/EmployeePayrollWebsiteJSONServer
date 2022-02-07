@@ -7,11 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/AddEmployee.css">
-    <script type="text/javascript" src="../js/FormValidation.js"></script>
+    <script type="text/javascript" src="../js/form.js"></script>
     <!-- <script type="text/javascript" src="../js/EmployeePayroll.js"></script> -->
     <script type="text/javascript" src="../js/site_properties.js"></script>
     <script type="text/javascript" src="../js/utility.js"></script>
-    <script type="text/javascript" src="../js/AjaxService.js"></script>
+    <script type="text/javascript" src="../AjaxService.js"></script>
     <title>Employee Payroll Form</title>
 </head>
 
@@ -35,7 +35,7 @@
         <div class="row-content">
             <label for="name" class="label text">Name</label>
             <input type="text" class="input" id="name" name="name" placeholder="Your name.." required>
-            <error-output class="text-error" for="text"></error-output>
+            <error-output class="name-error" for="name"></error-output>
         </div>
 
         <div class="row-content">

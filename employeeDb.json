@@ -23,6 +23,32 @@
       "_startDate": 1572287400000,
       "_note": "All In One",
       "_profilePic": "../assets/profile-images/Ellipse -3.png"
+    },
+    {
+      "_name": "Ashok",
+      "_profilePic": "../assets/profile-images/Ellipse -2.png",
+      "_gender": "male",
+      "_department": [
+        "HR",
+        "Engineer"
+      ],
+      "_salary": "422400",
+      "_note": "Note Added",
+      "_startDate": 1644949800000,
+      "id": 3
+    },
+    {
+      "_name": "Lasya",
+      "_profilePic": "../assets/profile-images/Ellipse -1.png",
+      "_gender": "female",
+      "_department": [
+        "Sales",
+        "Finance"
+      ],
+      "_salary": "453600",
+      "_note": "Added",
+      "_startDate": 1642357800000,
+      "id": 4
     }
   ]
 }
