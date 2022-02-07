@@ -49,6 +49,33 @@
       "_note": "Added",
       "_startDate": 1642357800000,
       "id": 4
+    },
+    {
+      "_name": "Demo",
+      "_profilePic": "../assets/profile-images/Ellipse -2.png",
+      "_gender": "male",
+      "_department": [
+        "HR",
+        "Sales",
+        "Others"
+      ],
+      "_salary": "475700",
+      "_note": "Added note       ",
+      "_startDate": 1643481000000,
+      "id": 5
+    },
+    {
+      "_name": "Pravin",
+      "_profilePic": "../assets/profile-images/Ellipse -3.png",
+      "_gender": "male",
+      "_department": [
+        "HR",
+        "Others"
+      ],
+      "_salary": "414000",
+      "_note": "Note added                ",
+      "_startDate": 1643567400000,
+      "id": 6
     }
   ]
 }
